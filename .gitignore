@@ -34,13 +34,4 @@ hs_err_pid*
 /out/test/
 
 # Keep gradle wrapper jar
-!admin-panel/gradle/wrapper/gradle-wrapper.jar
-!booking-panel/gradle/wrapper/gradle-wrapper.jar
-!employees-panel/gradle/wrapper/gradle-wrapper.jar
-!hotel-central/gradle/wrapper/gradle-wrapper.jar
 !gradle/wrapper/gradle-wrapper.jar
-
-admin-panel/build
-booking-panel/build
-employees-panel/build
-hotel-central/build
