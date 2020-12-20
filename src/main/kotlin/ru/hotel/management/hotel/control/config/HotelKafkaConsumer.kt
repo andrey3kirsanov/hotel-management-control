@@ -14,7 +14,7 @@ private val logging = KotlinLogging.logger {  }
 @Service
 class Consumer {
 
-    @KafkaListener(topics = ["HOTEL_PUSH"])
+    @KafkaListener(topics = ["hotel.push"])
     fun consume(@Payload data: HotelPush?,
                 @Header(KafkaHeaders.OFFSET) offset: Int?,
                 @Header(KafkaHeaders.RECEIVED_MESSAGE_KEY) key: String?,
