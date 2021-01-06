@@ -1,22 +1,12 @@
-# Hotel Management Central
+# Hotel Management Control
 
-// TODO переписать описание на английский
+Control-microservice stores information about booked rooms for management process by employees.
 
-Сеть отелей (большая сеть расположенная по всему миру, отели в разных странах городах). Система внутренняя с веб мордой для бронирования наружу.
+Also this microservice imports information about hotels, hotels-facilities, rooms, rooms-facilities.
 
-Функционал по ролям:
-1) Супер админ (создание отеля, удаление отеля, публикация отеля)
-2) Региональный менеджер отеля (ввод информации об отеле, номерах, ценах)
-3) Клиент (бронирование номеров, оплата)
-4) Финансовый менеджер имеет доступ к финансовой аналитике, которая нужна для подсчета прибыли отелей (доходы расходы налоги).
+Control-microservice is used by employees such as administrator, housekeepers and so on.
 
-По архитектуре он будет состоять из двух микросервисов:
+There will be task management for employees.
 
-Микросервис админки/бронирования -> Микросервис финансовой аналитики отелей. Обмен через Kafka.
-
-Микросервис админки/бронирования можно расширить - добавить функционал сервисного обслуживания номеров отелей. 
-К этому обслуживанию должны иметь сотрудники отелей: менеджеры, хаускиперы, официанты, ресепшн, сотрудники ресторанов.
-Можно внедрить Redis в котором будут хранится активные задачи сотрудников отелей: к примеру заказы еды.
-
-Стэк технологий:
-Kotlin, Spring Boot 2, Spring Cloud, Hibernate, PostgreSQL, Liquibase, Kafka, Gradle, Test Containers, JUnit, Mockito, MockMvc
+Technology stack:
+Kotlin, Spring Boot 2, Spring Data MongoDB, Spring Cloud Stream Binder Kafka, Kafka, MongoDB, Gradle
