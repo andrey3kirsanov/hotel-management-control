@@ -4,28 +4,36 @@ logging:
     ru.hotel.management: INFO
 
 spring:
-  kafka:
-    bootstrap-servers: ${kafka_bootstrap_servers:localhost:9092}
-    properties:
-      sasl:
-        jaas:
-          config: org.apache.kafka.common.security.plain.PlainLoginModule required username=${kafka_username:'admin'} password=${kafka_password:'admin-secret'};
-        mechanism: PLAIN
-      security:
-        protocol: SASL_PLAINTEXT
-    consumer:
-      auto-offset-reset: latest
-      group-id: hotel-management
-      max-poll-records: 1
-      fetch-max-wait: 36000
-      enable-auto-commit: false
-      client-id: hotel_store
-    jaas:
-      enabled: true
-    listener:
-      poll-timeout: 1800000
-      concurrency: 1
-      ack-mode: manual_immediate
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: hotel_management_control
+  cloud:
+    function:
+      definition: saveHotels
+    stream:
+      bindings:
+        saveHotels-in-0:
+          destination: hotel.push
+          group: hotel_management
+      kafka:
+        binder:
+          brokers: ${kafka_bootstrap_servers:localhost:9092}
+          consumer-properties:
+            max.poll.interval.ms: 300000 # represents how long processing a batch can take
+            session.timeout.ms: 30000 # heart beating will be controlled by the expected heartbeat.interval.ms and the upper limit defined by session.timeout.ms
+            max.poll.records: 1000 # batch size
+          auto-add-partitions: false
+          auto-create-topics: false
+          configuration:
+            auto.offset.reset: latest # automatically reset the offset to the latest committed offset
+            sasl:
+              jaas:
+                config: org.apache.kafka.common.security.plain.PlainLoginModule required username=${kafka_username:'admin'} password=${kafka_password:'admin-secret'};
+              mechanism: PLAIN
+            security:
+              protocol: SASL_PLAINTEXT
   application:
     name: hotel-management-control
 

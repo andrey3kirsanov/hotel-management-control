@@ -16,8 +16,9 @@ buildscript {
 
 plugins {
     application
+    id("net.ltgt.apt-idea") version "0.17"
     id("org.springframework.boot") version "2.3.0.RELEASE"
-    id("io.spring.dependency-management") version "1.0.9.RELEASE"
+    id("io.spring.dependency-management") version "1.0.10.RELEASE"
     kotlin("jvm") version "1.3.72"
     kotlin("plugin.spring") version "1.3.72"
     kotlin("kapt") version "1.3.72"
@@ -28,9 +29,18 @@ group = "ru.hotel.management.hotel.control"
 version = "1.0.0"
 java.sourceCompatibility = JavaVersion.VERSION_11
 
+val springCloudVersion = "Hoxton.SR9"
+configure<io.spring.gradle.dependencymanagement.dsl.DependencyManagementExtension> {
+    imports {
+        mavenBom("org.springframework.cloud:spring-cloud-dependencies:$springCloudVersion")
+    }
+}
+
 dependencies {
     // Spring
     implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
+
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
@@ -39,7 +49,11 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-configuration-processor")
 
     // Kafka
-    implementation("org.springframework.kafka:spring-kafka:2.5.3.RELEASE")
+    implementation("org.springframework.cloud:spring-cloud-stream")
+    implementation("org.springframework.cloud:spring-cloud-stream-binder-kafka")
+
+    implementation("org.mapstruct:mapstruct:1.4.1.Final")
+    kapt("org.mapstruct:mapstruct-processor:1.4.1.Final")
 
     // Lombok
     compileOnly("org.projectlombok:lombok:1.18.8")

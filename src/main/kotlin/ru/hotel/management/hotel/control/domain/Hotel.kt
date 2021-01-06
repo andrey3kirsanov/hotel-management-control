@@ -1,14 +1,14 @@
 package ru.hotel.management.hotel.control.domain
 
-import lombok.Builder
-import lombok.Getter
-import lombok.Setter
+import lombok.Data
+import org.springframework.data.annotation.Id
+import org.springframework.data.mongodb.core.mapping.Document
 import java.time.Instant
 
-@Getter
-@Setter
-@Builder
-class Hotel(
+@Data
+@Document("hotels")
+data class Hotel (
+        @Id
         val id: Long,
 
         val name: String,
