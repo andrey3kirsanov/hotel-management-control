@@ -4,7 +4,7 @@ Control-microservice stores information about booked rooms for management proces
 
 Also this microservice imports information about hotels, hotels-facilities, rooms, rooms-facilities.
 
-Control-microservice is used by employees such as administrator, housekeepers and so on.
+Control-microservice is used by employees such as administrators, housekeepers and so on.
 
 There will be task management for employees.
 
