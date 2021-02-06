@@ -19,5 +19,7 @@ data class Hotel (
 
         val updatedDateTime: Instant,
 
-        val facilities: List<HotelFacilities>
+        val rooms: List<Room>,
+
+        val facilities: List<HotelFacility>
 )

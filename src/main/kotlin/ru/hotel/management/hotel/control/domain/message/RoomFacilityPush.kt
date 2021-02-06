@@ -1,14 +1,12 @@
-package ru.hotel.management.hotel.control.domain
+package ru.hotel.management.hotel.control.domain.message
 
-import lombok.Builder
 import lombok.Getter
 import lombok.Setter
 import java.time.Instant
 
 @Getter
 @Setter
-@Builder
-class HotelFacilities(
+class RoomFacilityPush(
         var id: Long,
 
         var name: String,

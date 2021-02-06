@@ -3,7 +3,7 @@ package ru.hotel.management.hotel.control.config
 import mu.KotlinLogging
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import ru.hotel.management.hotel.control.domain.dto.HotelPush
+import ru.hotel.management.hotel.control.domain.message.HotelPush
 import ru.hotel.management.hotel.control.mapper.HotelMapper
 import ru.hotel.management.hotel.control.repository.HotelRepository
 import java.util.function.Consumer
@@ -18,7 +18,13 @@ class HotelConsumer(
     @Bean
     fun saveHotels(): Consumer<HotelPush>? {
         return Consumer<HotelPush> { input ->
-            repository.save(mapper.toHotel(input))
+            val hotelOptional = repository.findById(input.id)
+            if (hotelOptional.isPresent) {
+                repository.deleteById(input.id)
+                repository.insert(mapper.toHotel(input))
+            } else {
+                repository.insert(mapper.toHotel(input))
+            }
         }
     }
 }

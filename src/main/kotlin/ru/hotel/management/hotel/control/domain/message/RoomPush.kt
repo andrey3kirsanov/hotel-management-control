@@ -1,15 +1,13 @@
-package ru.hotel.management.hotel.control.domain
+package ru.hotel.management.hotel.control.domain.message
 
-import lombok.Data
-import org.springframework.data.annotation.Id
-import org.springframework.data.mongodb.core.mapping.Document
+import lombok.Getter
+import lombok.Setter
 import ru.hotel.management.hotel.control.domain.enums.RoomStatus
 import java.time.Instant
 
-@Data
-@Document("rooms")
-class Room(
-        @Id
+@Getter
+@Setter
+class RoomPush(
         var id: Long,
 
         var name: String,
@@ -30,5 +28,5 @@ class Room(
 
         var bookedDateTime: Instant?,
 
-        var facilities: List<RoomFacility>
+        var facilities: MutableList<RoomFacilityPush>
 )
