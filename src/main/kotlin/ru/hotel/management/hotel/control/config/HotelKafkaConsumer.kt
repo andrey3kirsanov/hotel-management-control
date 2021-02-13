@@ -5,26 +5,32 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import ru.hotel.management.hotel.control.domain.message.HotelPush
 import ru.hotel.management.hotel.control.mapper.HotelMapper
+import ru.hotel.management.hotel.control.mapper.RoomMapper
 import ru.hotel.management.hotel.control.repository.HotelRepository
+import ru.hotel.management.hotel.control.repository.RoomRepository
 import java.util.function.Consumer
 
 private val logging = KotlinLogging.logger {  }
 
 @Configuration
 class HotelConsumer(
-        val repository: HotelRepository,
-        val mapper: HotelMapper
+        val hotelRepository: HotelRepository,
+        val roomRepository: RoomRepository,
+        val hotelMapper: HotelMapper,
+        val roomMapper: RoomMapper
 ) {
     @Bean
     fun saveHotels(): Consumer<HotelPush>? {
         return Consumer<HotelPush> { input ->
-            val hotelOptional = repository.findById(input.id)
+            val hotelOptional = hotelRepository.findById(input.id)
             if (hotelOptional.isPresent) {
-                repository.deleteById(input.id)
-                repository.insert(mapper.toHotel(input))
+                hotelRepository.deleteById(input.id)
+                hotelRepository.insert(hotelMapper.toHotel(input))
             } else {
-                repository.insert(mapper.toHotel(input))
+                hotelRepository.insert(hotelMapper.toHotel(input))
             }
+
+            roomRepository.saveAll(roomMapper.toRoomList(input.rooms))
         }
     }
 }

@@ -7,6 +7,8 @@ import ru.hotel.management.hotel.control.domain.enums.UserRole
 @Getter
 @Setter
 class EmployeeDTO (
+    val id: String,
+
     val username: String,
 
     val password: String,
