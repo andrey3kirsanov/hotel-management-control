@@ -7,7 +7,7 @@ import java.time.Instant
 import java.time.LocalDate
 
 @Data
-@Document("employees")
+@Document("customers")
 class Customer(
         @Id
         var id: Long,
