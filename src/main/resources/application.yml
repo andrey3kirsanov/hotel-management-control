@@ -11,11 +11,14 @@ spring:
       database: hotel_management_control
   cloud:
     function:
-      definition: saveHotels
+      definition: saveHotels;saveCustomers
     stream:
       bindings:
         saveHotels-in-0:
           destination: hotel.push
+          group: hotel_management
+        saveCustomers-in-0:
+          destination: customer.push
           group: hotel_management
       kafka:
         binder:
